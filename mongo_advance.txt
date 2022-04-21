@@ -1,0 +1,62 @@
+first create a database 
+db.use movieData
+
+create a collection
+db.createCollection("movies")
+
+insert all data by compus
+
+to find the exact movie name 
+
+db.movies.find({"movie_name" : "Behind the Candelabra"})
+
+where movies are there 
+db.movies.find({},{"movie_name" : 1})
+
+now it will give me all the informations but i don't want the id s here
+db.movies.find({},{"movie_name" : 1 , "budget" : 1 , "_id" : 0})
+db.movies.find({"movie_name" : {$eq: "Behind the Candelabra"}})
+db.movies.find({"movie_name" : {$ne: "Behind the Candelabra"}})
+db.movies.find({"movie_name" : {$eq : "Behind the Candelabra"} },{"movie_name":1 , "_id" :0})   
+
+
+db.movies.find({"budget" : {$gte: 12372}})
+db.movies.find({"budget" : {$lte: 12372}})
+
+
+using both gte and lte together 
+db.movies.find({"production_year" : {$gt:2000} , "budget" : {$gt : 10000}})
+
+
+find all movies that are neither produced after 2000 nor 
+with budget greater than 10000.
+
+
+db.movies.find({
+    $nor: 
+    [
+    "production_year":{$gte:2000 , $lte:2019} ,
+     "budget" : {$gt : 10000} 
+     ]
+     })
+
+
+db.movies.find({
+    $not: 
+    [
+    "production_year":{$gte:2000 , $lte:2019} ,
+     "budget" : {$gt : 10000} 
+     ]
+     })
+
+
+
+
+find all movies that were produced from 2000 to 2010.
+
+db.movies.find( {} )
+db.movies.find({"production_year" : {$gte:2000 , $lte:2010}})
+
+db.movies.find({}).sort({"production_year":-1})
+
+db.movies.find({}).skip(10).limit(10)
